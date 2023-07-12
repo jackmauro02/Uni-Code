@@ -1,0 +1,26 @@
+Jack Mauro 
+jm2286
+
+1) 
+SELECT Timeslot.instructor, Timeslot.start_time, Class.cid 
+FROM Timeslot 
+LEFT JOIN Class ON Timeslot.cid = Class.cid 
+WHERE Timeslot.cid = 'c002' 
+ORDER BY Timeslot.instructor; 
+ 
+2) 
+SELECT Timeslot.instructor, Class.course 
+FROM Timeslot  
+LEFT JOIN Class ON Timeslot.cid = Class.cid  
+ORDER BY Class.course;
+ 
+3a) 
+SELECT DISTINCT C.cid, C.course, T.instructor, T.start_time, B.reservation, B.uid 
+FROM Timeslot T, Class C, Booking B 
+WHERE B.reservation = 1 AND B.uid = 'U001' ;
+
+3b) 
+SELECT DISTINCT C.cid, C.course, B.reservation, B.uid, U.student, SUM(B.reservation) AS total
+FROM Timeslot T, Class C, Booking B, User U
+WHERE B.reservation = 1 AND B.uid = 'U001' And U.student = 'Y'
+GROUP BY C.cid;

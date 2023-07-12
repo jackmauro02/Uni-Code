@@ -1,0 +1,129 @@
+<html>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+  <style>
+    *{
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    table {
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    table,th, td {
+        border: 1px solid black;
+    }
+    
+    th {
+        font-size: 20px;
+        color: aliceblue;
+        background-color: darkcyan;
+        width: auto;
+    }
+
+    tr:nth-child(even) {
+        background-color: skyblue;
+    }
+
+    tr:nth-child(odd) {
+        background-color: white;
+    }
+
+    #searhBar {
+        margin-top: 5px;
+    }
+  </style>
+
+<body>
+    <h1>Region information</h1>
+
+      Select a Region: <select id="region"> </select>
+    <br></br>
+    
+    <input type="text" name="searchBar" id="searchBar" placeholder="e.g Greece"> 
+    <input type="button" name="searchBtn" id="searchBtn" value="Search"> </br>
+  
+    <p id="avPop" name="avPop">  </p>
+    <p id="countries" name="countries">  </p>
+    <p id="languages" name="languages">  </p>
+
+    <table id="Table">
+      <thead>
+        <th>Flag</th>
+        <th>Name</th>
+        <th>Capital</th>
+        <th>Population</th>
+        <th>Language</th>
+        <th>Currency</th>
+      </thead>
+    </table>
+
+</body>
+  
+<script>
+  $(document).ready(function () {
+    var regionInfo;
+    $.get(
+      "https://www.cs.kent.ac.uk/people/staff/yh/co539-A1/countryData.php?regions",
+      function (info) {
+        for (let i = 0; i < info.length; i++) {
+          $("select").append(
+            `<option>${info[i]}</option>`
+          );
+        }});
+
+    $("#region").on("change", function () {
+      var regionInfo = $("#region option:selected").text();
+      $.get(
+        "https://www.cs.kent.ac.uk/people/staff/yh/co539-A1/countryData.php?region=" +
+        regionInfo,
+        
+        function (info) {
+          $("#Table tbody").remove();
+          for (let i = 0; i < info.length; i++) {
+            $("Table").append(
+              `<tbody><tr>
+                          <td><img src = ${info[i].flag} alt ="" width = "90" height = "40"/></td>
+                          <td>${info[i].name}</td>
+                          <td>${info[i].capital}</td>
+                          <td>${info[i].info.population}</td>
+                          <td>${info[i].info.language}</td>
+                          <td>${info[i].info.currency}</td>
+                        </tr></tbody>`
+                
+            );
+            var average = 0
+            for (let i = 0; i < info.length; i++) 
+            {
+                average = info[i].info.population+average
+                var realAverage = (average/ info.length)
+                $("avPop").append(`<p> ${realAverage} </p>`)}
+                document.getElementById("avPop").innerText = " Average population = " + realAverage; 
+                document.getElementById("countries").innerText = " Number of countries = " + info.length; 
+          }} 
+      );
+      
+      var lang = 0
+      var countLang = 0
+      for (let i = 0; i < info.length; i++) 
+            {
+              info[i].info.language
+              
+              document.getElementById("languages").innerText = "Most popular language is " + lang + "with " + countLang + "speaking countries";  
+            }
+    });
+  });
+
+  $(document).ready(function(){
+          $("#searchBtn").click(function() {
+                var value = $("#searchBar").val().toUpperCase();
+                $("Table tr").filter(function() {
+                  $(this).toggle($(this).text().toUpperCase().indexOf(value) > -1)
+                });
+              });
+            });
+
+</script>
+</html>

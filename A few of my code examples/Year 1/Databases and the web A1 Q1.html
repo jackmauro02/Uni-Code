@@ -1,0 +1,167 @@
+<html>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        #firstName {
+            margin-top: 5px;
+        }
+
+        .input {
+            font-size: 25px;
+            color: black;
+            margin: 5px;
+        }
+
+        form {
+            font-size: 25px;
+            margin-top: 3px;
+        }
+
+        #addMember, #reset {
+           width: 100px;
+           height: 30px; 
+           font-size: 15px;
+           margin: 10px;
+        }
+
+        table {
+            width: 50%;
+            margin: 30px auto;
+        }
+        
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th {
+          font-size: 20px;
+          background-color:burlywood;
+        }
+
+        td {
+            font-size: 15px;
+        }
+
+        tr:nth-child(even) {
+            background-color: coral;
+        }
+
+        tr:nth-child(odd) {
+            background-color: burlywood;
+        }
+
+    </Style>
+
+<body>
+    <h1>Register to the gym</h1>
+    <form>
+    <div class="container">
+        First Name: <input type="text" name="firstName" id="firstName" placeholder="e.g Luke"></br>
+        Last Name: <input type="text" name="lastName" id="lastName" placeholder="e.g Thomas"></br>
+        Age: <input type="number" name="age" id="age" placeholder="e.g 18"  onchange=valAge()></br>
+        
+        Height: <select id="feet">
+            <option> Feet </option>
+            <option> 4 </option>
+            <option> 5 </option>
+            <option> 6 </option>
+        </select>
+        <select id="inches">
+            <option> Inches </option>
+            <option> 0 </option>
+            <option> 1 </option>
+            <option> 2 </option>
+            <option> 3 </option>
+            <option> 4 </option>
+            <option> 5 </option>
+            <option> 6 </option>
+            <option> 7 </option>
+            <option> 8 </option>
+            <option> 9 </option>
+            <option> 10 </option>
+            <option> 11 </option>
+        </select> <br />
+        Start Date: <input type="date" id="date" required="required"  min="2022-01-01" /><br />
+
+        <input type="reset" name="reset" id="reset" value="Reset" >
+        <input type="button" name="add" id="addMember" value="Add Member" onclick="AddRow()">
+
+    </div>
+</form>
+
+        <table id="Tbl">
+                <tr>
+                    <th>Rows</th>
+                    <th>Full Name</th>
+                    <th>Age</th>
+                    <th>Height</th>
+                    <th>date</th>
+                </tr>
+            
+        </table>
+        <input type="button" name="delete" id="delete" value="Delete Row" onclick="deleteRow()">
+
+
+
+    <script>
+       function valAge() {
+            if (document.getElementById("age").value < 18 || document.getElementById("age").value > 65) {
+                alert("invalid age")
+            }
+        }
+
+        var arr1 = [];
+        var arr2 = [];
+        var arr3 = [];
+        var arr4 = [];
+
+        var n = 1;
+        var x = 0;
+
+        function AddRow(){
+            var AddRowNew = document.getElementById("Tbl");
+            var NewRow = AddRowNew.insertRow(n);
+
+            arr1[x] = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
+            arr2[x] = document.getElementById("age").value;
+            arr3[x] = document.getElementById("feet").value +"'" + document.getElementById("inches").value;
+            arr4[x] = document.getElementById("date").value;
+
+            var column1 = NewRow.insertCell(0);
+            var column2 = NewRow.insertCell(1);
+            var column3 = NewRow.insertCell(2);
+            var column4 = NewRow.insertCell(3);
+            var column5 = NewRow.insertCell(4);
+
+            column1.innerHTML = n;
+            column2.innerHTML = arr1[x];
+            column3.innerHTML = arr2[x];
+            column4.innerHTML = arr3[x];
+            column5.innerHTML = arr4[x];
+
+            n++;
+            x++;
+            
+        }
+
+        function deleteRow() {
+            var remRowNew = document.getElementById("Tbl");
+            var DeleteRow = remRowNew.deleteRow(1);
+           
+            for(var i = 0; i > tot;) {
+                n=1;
+                column1.innerHTML = n;
+                n++;
+                i++;
+
+            }
+    
+        }
+
+    </script>
+</body>
+</html>
